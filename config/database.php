@@ -1,13 +1,19 @@
 <?php
 class Database {
-    private $host = "localhost";
-    private $db_name = "task_management";
-    private $username = "root";
-    private $password = "";
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
     private $conn;
     private $use_sqlite = false;
 
     public function __construct($force_sqlite = false) {
+        // Use environment variables for production
+        $this->host = $_ENV['DB_HOST'] ?? getenv('DB_HOST') ?? "localhost";
+        $this->db_name = $_ENV['DB_NAME'] ?? getenv('DB_NAME') ?? "task_management";
+        $this->username = $_ENV['DB_USER'] ?? getenv('DB_USER') ?? "root";
+        $this->password = $_ENV['DB_PASS'] ?? getenv('DB_PASS') ?? "";
+        
         $this->use_sqlite = $force_sqlite;
     }
 

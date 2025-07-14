@@ -15,10 +15,15 @@ RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
 
 # Deny access to sensitive files
-<FilesMatch "\.(md|json|lock|log|yml|yaml|env)$">
+<FilesMatch "\.(md|json|lock|log|yml|yaml|env|example)$">
     Order allow,deny
     Deny from all
 </FilesMatch>
+
+# Protect .git directory
+<IfModule mod_alias.c>
+    RedirectMatch 404 /\.git
+</IfModule>
 
 # Deny access to directories
 <FilesMatch "^(config|includes|data)/">
